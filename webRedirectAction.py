@@ -7,7 +7,12 @@
 def main(args):
 
     name = args.get("name","stranger")
+
+    # Make some dummy criteria as a decision, e.g. whether or not the
+    # name is longer than 5 characters
     if(len(name) > 5):
+        # return a dictionary with the location URL and an http status
+        # code
         return {
             "headers": {"location": "https://192.168.33.16/api/v1/web/guest/pythondemo/hello?name=" + name},
             "statusCode": "302"
