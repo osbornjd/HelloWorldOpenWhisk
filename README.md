@@ -64,6 +64,7 @@ $ vagrant ssh
 ### Setting up OpenWhisk Environment on Vagrant VM
 
 Now you should be in the VM and be able to use the OpenWhisk command `wsk`. For example, try to run the hello world command
+
 ```bash
 vagrant@ubuntu-xenial:$ wsk action invoke /whisk.system/utils/echo -p message hello --result
 ```
@@ -76,11 +77,12 @@ which should return
     ```
 
 So that OpenWhisk knows where to deploy your serverless functions, create a file in your home directory:
+
 ```bash
 vagrant@ubuntu-xenial:$ emacs ~/.wskprops
 ```
 
-and copy the following information in the file:
+If the file is not already filled with the following information, copy the following into `~/.wskprops` :
 ```
 AUTH=23bc46b1-71f6-4ed5-8c54-816aa4f8c502:123zO3xZCLrMN6v2BKK1dXYFpXlPkccOFqm12CdAsMgRU4VrNZ9lyGVCGuMDGIwP
 APIHOST=192.168.33.16
@@ -167,35 +169,11 @@ Then create the actions:
 ```bash
 vagrant@ubuntu-xenial:$ wsk action create htmlSequence/hello helloSequence.js
 vagrant@ubuntu-xenial:$ wsk action create htmlSequence/final final.js
-vagrant@ubuntu-xenial:$ wsk action create htmlSequence/htmlSequence --sequence hello,/whisk.system/utils/split,/whisk.system/utils/sort,final --web true
+vagrant@ubuntu-xenial:$ wsk action create htmlSequence/htmlSequence --sequence htmlSequence/hello,/whisk.system/utils/split,/whisk.system/utils/sort,htmlSequence/final --web true
 vagrant@ubuntu-xenial:$ wsk action get htmlSequence/htmlSequence --url
 ```
 Then type the URL into your browser with a string to parse and a character with which to parse the string, for example:
 ```
 https://192.168.33.16/api/v1/web/guest/htmlSequence/htmlSequence?name=Joe%20likes%20to%20eat%20clementines&separator=%20
 ```
-This parses the phrase "Joe likes to eat clementines" by the space character and prints it to to an html page.
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
+This parses the phrase "Joe likes to eat clementines" by the space character and prints it to to an html page (I didn't know this, but apparently %20 is the space character in URL language).
