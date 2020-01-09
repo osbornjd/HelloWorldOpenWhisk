@@ -89,7 +89,7 @@ AUTH=23bc46b1-71f6-4ed5-8c54-816aa4f8c502:123zO3xZCLrMN6v2BKK1dXYFpXlPkccOFqm12C
 APIHOST=192.168.33.16
 ```
 
-These are the default authorization and IP address that OpenWhisk will deploy functions with/to. Note that you should now be able to actually go to `http://192.168.33.16` and see the OpenWhisk default JSON data.
+These are the default authorization and IP address that OpenWhisk will deploy functions with/to. Note that you should now be able to actually go to `http://192.168.33.16` and see the OpenWhisk default JSON data. If the website asks you to enter a user name and password, these are givne in the `AUTH` variable above. The username is everything before the `:`, and the password is everything after the `:`.
 
 
 
