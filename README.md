@@ -73,8 +73,8 @@ which should return
 ```bash
 {
     "message": "hello"
-    }
-    ```
+}
+```
 
 So that OpenWhisk knows where to deploy your serverless functions, create a file in your home directory:
 
@@ -83,6 +83,7 @@ vagrant@ubuntu-xenial:$ emacs ~/.wskprops
 ```
 
 If the file is not already filled with the following information, copy the following into `~/.wskprops` :
+
 ```
 AUTH=23bc46b1-71f6-4ed5-8c54-816aa4f8c502:123zO3xZCLrMN6v2BKK1dXYFpXlPkccOFqm12CdAsMgRU4VrNZ9lyGVCGuMDGIwP
 APIHOST=192.168.33.16
@@ -97,20 +98,21 @@ These are the default authorization and IP address that OpenWhisk will deploy fu
 Now you should be in good shape to actually try to deploy some FaaS. Here are several links that I found useful for learning how to use Whisk and how to write some basic functions.
 
 #### Useful FaaS links
--[OpenWhisk Default README](https://github.com/apache/openwhisk/blob/master/README.md)
--[blog post about how to deploy hello world javascript function and then call it via browser URL](https://horeaporutiu.com/blog/openwhisk-web-actions-and-rest-api-calls/)
--[API Gateway README](https://github.com/apache/openwhisk/blob/master/docs/apigateway.md)
--[packages README](https://github.com/apache/openwhisk/blob/master/docs/packages.md)
--[Web actions README](https://github.com/apache/openwhisk/blob/master/docs/webactions.md#web-actions)
--[Using REST APIs with OpenWhisk README](https://github.com/apache/openwhisk/blob/master/docs/rest_api.md)
--[OpenWhisk Workshop exercises and READMEs](https://github.com/apache/openwhisk-workshop/tree/master/exercises)
--[Example FaaS included by default in OpenWhisk Catalog](https://github.com/apache/openwhisk-catalog/tree/master/packages/utils)
--[OpenWhisk actions README](https://github.com/apache/openwhisk/blob/master/docs/actions.md)
+- [OpenWhisk Default README](https://github.com/apache/openwhisk/blob/master/README.md)
+- [blog post about how to deploy hello world javascript function and then call it via browser URL](https://horeaporutiu.com/blog/openwhisk-web-actions-and-rest-api-calls/)
+- [API Gateway README](https://github.com/apache/openwhisk/blob/master/docs/apigateway.md)
+- [packages README](https://github.com/apache/openwhisk/blob/master/docs/packages.md)
+- [Web actions README](https://github.com/apache/openwhisk/blob/master/docs/webactions.md#web-actions)
+- [Using REST APIs with OpenWhisk README](https://github.com/apache/openwhisk/blob/master/docs/rest_api.md)
+- [OpenWhisk Workshop exercises and READMEs](https://github.com/apache/openwhisk-workshop/tree/master/exercises)
+- [Example FaaS included by default in OpenWhisk Catalog](https://github.com/apache/openwhisk-catalog/tree/master/packages/utils)
+- [OpenWhisk actions README](https://github.com/apache/openwhisk/blob/master/docs/actions.md)
 
 
 #### Building a FaaS action
 
 You can deploy your FaaS by using some of the hello world examples in this repository. One easy example is to trigger a function with a URL that makes a decision and triggers some other functions based on a string parameter given in the URL. Clone this repository first:
+
 ```bash
 vagrant@ubuntu-xenial:$ git clone https://github.com/osbornjd/HelloWorldOpenWhisk.git
 ```
@@ -146,6 +148,7 @@ vagrant@ubuntu-xenial:$ wsk action get pythondemo/redirectAction --url
 ```
 
 then type in the URL at the browser
+
 ```
 https://192.168.33.16/api/v1/web/guest/default/webRedirectAction?name=Joe
 ```
@@ -173,6 +176,7 @@ vagrant@ubuntu-xenial:$ wsk action create htmlSequence/htmlSequence --sequence h
 vagrant@ubuntu-xenial:$ wsk action get htmlSequence/htmlSequence --url
 ```
 Then type the URL into your browser with a string to parse and a character with which to parse the string, for example:
+
 ```
 https://192.168.33.16/api/v1/web/guest/htmlSequence/htmlSequence?name=Joe%20likes%20to%20eat%20clementines&separator=%20
 ```
