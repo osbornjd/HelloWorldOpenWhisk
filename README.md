@@ -35,10 +35,10 @@ source /etc/environment
 ```
 Add the following lines under `source /etc/environment`:
 ```bash
-   sudo apt-get install -y npm
-      curl -sL https://deb.nodesource.com/setup_13.x | sudo -E bash -
-         sudo apt-get install -y nodejs
-	 ```
+sudo apt-get install -y npm
+curl -sL https://deb.nodesource.com/setup_13.x | sudo -E bash -
+sudo apt-get install -y nodejs
+```
 
 
 
@@ -68,15 +68,17 @@ Now you should be in the VM and be able to use the OpenWhisk command `wsk`. For 
 vagrant@ubuntu-xenial:$ wsk action invoke /whisk.system/utils/echo -p message hello --result
 ```
 which should return
+
 ```bash
 {
     "message": "hello"
     }
     ```
-    So that OpenWhisk knows where to deploy your serverless functions, create a file in your home directory:
-    ```bash
-    vagrant@ubuntu-xenial:$ emacs ~/.wskprops
-    ```
+
+So that OpenWhisk knows where to deploy your serverless functions, create a file in your home directory:
+```bash
+vagrant@ubuntu-xenial:$ emacs ~/.wskprops
+```
 
 and copy the following information in the file:
 ```
@@ -173,3 +175,27 @@ Then type the URL into your browser with a string to parse and a character with 
 https://192.168.33.16/api/v1/web/guest/htmlSequence/htmlSequence?name=Joe%20likes%20to%20eat%20clementines&separator=%20
 ```
 This parses the phrase "Joe likes to eat clementines" by the space character and prints it to to an html page.
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
