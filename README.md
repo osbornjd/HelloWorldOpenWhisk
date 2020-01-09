@@ -92,6 +92,7 @@ These are the default authorization and IP address that OpenWhisk will deploy fu
 
 Now you should be in good shape to actually try to deploy some FaaS. Here are several links that I found useful for learning how to use Whisk and how to write some basic functions.
 
+#### Useful FaaS links
 -[OpenWhisk Default README](https://github.com/apache/openwhisk/blob/master/README.md)
 -[blog post about how to deploy hello world javascript function and then call it via browser URL](https://horeaporutiu.com/blog/openwhisk-web-actions-and-rest-api-calls/)
 -[API Gateway README](https://github.com/apache/openwhisk/blob/master/docs/apigateway.md)
@@ -100,7 +101,75 @@ Now you should be in good shape to actually try to deploy some FaaS. Here are se
 -[Using REST APIs with OpenWhisk README](https://github.com/apache/openwhisk/blob/master/docs/rest_api.md)
 -[OpenWhisk Workshop exercises and READMEs](https://github.com/apache/openwhisk-workshop/tree/master/exercises)
 -[Example FaaS included by default in OpenWhisk Catalog](https://github.com/apache/openwhisk-catalog/tree/master/packages/utils)
+-[OpenWhisk actions README](https://github.com/apache/openwhisk/blob/master/docs/actions.md)
 
 
+#### Building a FaaS action
+
+You can deploy your FaaS by using some of the hello world examples in this repository. One easy example is to trigger a function with a URL that makes a decision and triggers some other functions based on a string parameter given in the URL. Clone this repository first:
+```bash
+vagrant@ubuntu-xenial:$ git clone https://github.com/osbornjd/HelloWorldOpenWhisk.git
+```
+
+We will use the python files `webRedirectAction.py`, `hello.py`, and `goodbye.py`. Lets create a package to work in first:
+```bash
+vagrant@ubuntu-xenial:$ wsk package create pythondemo
+```
+Next create your hello and goodbye actions:
+
+```bash
+vagrant@ubuntu-xenial:$ wsk action create pythondemo/hello hello.py --web true
+vagrant@ubuntu-xenial:$ wsk action create pythondemo/goodbye goodbye.py --web true
+vagrant@ubuntu-xenial:$ wsk action create pythondemo/redirectAction webRedirectAction.py --web true
+```
+
+`--web true` tells OpenWhisk to deploy the function with an attached URL. We could first try to run the hello world `hello.py` web action by executing:
+
+```bash
+vagrant@ubuntu-xenial:$ wsk action get pythondemo/hello --url
+```
+
+and then entering the returned URL into the browser, e.g. (with "Joe" changed to whatever you like your string to be)
+
+```bash
+https://192.168.33.16/api/v1/web/guest/pythondemo/hello?name=Joe
+```
+
+The same can be done for the web redirect action
+
+```bash
+vagrant@ubuntu-xenial:$ wsk action get pythondemo/redirectAction --url
+```
+
+then type in the URL at the browser
+```
+https://192.168.33.16/api/v1/web/guest/default/webRedirectAction?name=Joe
+```
+
+You can adjust the length of the name to see the web redirect in action (e.g. by using "Joseph" instead of "Joe")
 
 
+#### Building Chained FaaS actions
+
+You can also chain FaaS together directly within OpenWhisk without e.g. just redirecting a bunch of URLs. As an example, let's chain four functions together which each do different tasks. We will chain together `helloSequence.js`,`/whisk.system/utils/split`,`/whisk.system/utils/sort`, and `final.js`.
+
+First create a package to keep the actions in
+
+```bash
+vagrant@ubuntu-xenial:$ wsk package create htmlSequence
+```
+
+
+Then create the actions:
+
+```bash
+vagrant@ubuntu-xenial:$ wsk action create htmlSequence/hello helloSequence.js
+vagrant@ubuntu-xenial:$ wsk action create htmlSequence/final final.js
+vagrant@ubuntu-xenial:$ wsk action create htmlSequence/htmlSequence --sequence hello,/whisk.system/utils/split,/whisk.system/utils/sort,final --web true
+vagrant@ubuntu-xenial:$ wsk action get htmlSequence/htmlSequence --url
+```
+Then type the URL into your browser with a string to parse and a character with which to parse the string, for example:
+```
+https://192.168.33.16/api/v1/web/guest/htmlSequence/htmlSequence?name=Joe%20likes%20to%20eat%20clementines&separator=%20
+```
+This parses the phrase "Joe likes to eat clementines" by the space character and prints it to to an html page.
