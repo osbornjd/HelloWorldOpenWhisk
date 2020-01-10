@@ -5,14 +5,13 @@ This README serves as documentation for getting OpenWhisk to run on a virtual ma
 
 #### Table of Contents
 
-- [Hello World FaaS with OpenWhisk](#hello-world-faas-with-openwhisk)
-  * [Building and Running OpenWhisk on Vagrant VM](#building-and-running-openwhisk-on-vagrant-vm)
-    + [Setting up OpenWhisk Environment on Vagrant VM](#setting-up-openwhisk-environment-on-vagrant-vm)
-  * [Building and Running OpenWhisk through Docker](#building-and-running-openwhisk-through-docker)
-  * [Deploy some FaaS](#deploy-some-faas)
-      - [Building a FaaS action](#building-a-faas-action)
-      - [Building Chained FaaS actions](#building-chained-faas-actions)
-      - [Useful FaaS links](#useful-faas-links)
+- [Building and Running OpenWhisk on Vagrant VM](#building-and-running-openwhisk-on-vagrant-vm)
+  * [Setting up OpenWhisk Environment on Vagrant VM](#setting-up-openwhisk-environment-on-vagrant-vm)
+- [Building and Running OpenWhisk through Docker](#building-and-running-openwhisk-through-docker)
+- [Deploy some FaaS](#deploy-some-faas)
+    + [Building a FaaS action](#building-a-faas-action)
+    + [Building Chained FaaS actions](#building-chained-faas-actions)
+    + [Useful FaaS links](#useful-faas-links)
 
 
 ## Building and Running OpenWhisk on Vagrant VM
