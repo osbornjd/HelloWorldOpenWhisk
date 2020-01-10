@@ -5,13 +5,15 @@ This README serves as documentation for getting OpenWhisk to run on a virtual ma
 
 #### Table of Contents
 
-- [Building and Running OpenWhisk on Vagrant VM](## Building and Running OpenWhisk on Vagrant VM)
-	- [Setting up OpenWhisk Environment on Vagrant VM](### Setting up OpenWhisk Environment on Vagrant VM)
-- [Building and Running OpenWhisk through Docker](## Building and Running OpenWhisk through Docker)
-- [Deploy some Faas](## Deploy some FaaS)
-	- [Building a FaaS action](#### Building a FaaS action)
-	- [Building Chained FaaS actions](#### Building Chained FaaS actions)
-	- [Useful FaaS links](#### Useful FaaS links)
+- [Hello World FaaS with OpenWhisk](#hello-world-faas-with-openwhisk)
+  * [Building and Running OpenWhisk on Vagrant VM](#building-and-running-openwhisk-on-vagrant-vm)
+    + [Setting up OpenWhisk Environment on Vagrant VM](#setting-up-openwhisk-environment-on-vagrant-vm)
+  * [Building and Running OpenWhisk through Docker](#building-and-running-openwhisk-through-docker)
+  * [Deploy some FaaS](#deploy-some-faas)
+      - [Building a FaaS action](#building-a-faas-action)
+      - [Building Chained FaaS actions](#building-chained-faas-actions)
+      - [Useful FaaS links](#useful-faas-links)
+
 
 ## Building and Running OpenWhisk on Vagrant VM
 
@@ -129,8 +131,8 @@ Next, to get the CLI API functional you need to access the binary file that was 
 
 
 ```bash
-alias wsk=~/git/openwhisk-devtools/docker-compose/openwhisk-src/bin/wsk
 ```
+alias wsk=~/git/openwhisk-devtools/docker-compose/openwhisk-src/bin/wsk
 
 Now you should be able to use the CLI and access web actions. For example, if you follow the instructions to deploy a hello world function below, you should be able to follow the web url and trigger a FaaS. Note that in the case of the docker container, Whisk complains that it is unable to validate a certificate. You can bypass this by adding the `-i` flag to any `wsk` command that you run, which stands for insecure. In my case, I just added this to the `alias` command above. This might be a bug (feature?) of the docker container deployment. When Serverless (the API, not the generic name) interfaces with Whisk, it requires that you set a flag in the YAML file to `ignore_certs`. So there is precedence from Serverless that, for whatever reason, when deploying FaaS locally through the docker container you have to ignore the certification that is normally required by Whisk.
 
