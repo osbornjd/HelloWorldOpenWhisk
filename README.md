@@ -215,7 +215,27 @@ https://192.168.33.16/api/v1/web/guest/htmlSequence/htmlSequence?name=Joe%20like
 This parses the phrase "Joe likes to eat clementines" by the space character and prints it to to an html page (I didn't know this, but apparently %20 is the space character in URL language).
 
 
+#### Java Action within a Maven package
 
+Openwhisk also allows you to develop actions within Java, which are compiled and then deployed. See [here](https://github.com/apache/openwhisk/blob/master/docs/actions-java.md) for a pretty comprehensive hello world example. I have some additional thoughts that I needed to sort out.
+
+To make the compilation process easier, and to take advantage of other packages, you can use a maven project to compile your Java FaaS. There is an example hello world maven package in this repository that you should be able to check out and deploy, following these instructions.
+
+Clone the repository, and cd to the example
+
+```
+$ cd HelloWorldOpenWhisk/mvn_java_ex
+```
+
+You can build the package by running `mvn clean verify` at the command line. This will install the `jar` file which can be used to create the FaaS action.
+
+Create the action by executing at the CLI
+
+```
+wsk action create helloJava target/HelloWorld-0.0.1-SNAPSHOT-HelloWorld.jar --main javaHelloWorld.java.Hello --web true
+```
+
+The key to this command is the `--main` flag. This flag has to be set for compiled java actions and the associated parameter has to correspond to the class which contains the static main function that the FaaS should deploy/run. In this case, `javaHelloWorld.java.Hello` is the full package+name of the HelloWorld class. After this you should be able to do the usual `get` to obtain the URL and go to the URL on your browser to trigger the action.
 
 
 #### Useful FaaS links
@@ -228,7 +248,7 @@ This parses the phrase "Joe likes to eat clementines" by the space character and
 - [OpenWhisk Workshop exercises and READMEs](https://github.com/apache/openwhisk-workshop/tree/master/exercises)
 - [Example FaaS included by default in OpenWhisk Catalog](https://github.com/apache/openwhisk-catalog/tree/master/packages/utils)
 - [OpenWhisk actions README](https://github.com/apache/openwhisk/blob/master/docs/actions.md)
-
+- [Java Maven Documentation](https://github.com/apache/openwhisk/blob/master/docs/actions-java.md)
 
 
 
