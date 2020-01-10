@@ -130,10 +130,12 @@ Next, to get the CLI API functional you need to access the binary file that was 
 
 
 ```bash
-```
 alias wsk=~/git/openwhisk-devtools/docker-compose/openwhisk-src/bin/wsk
+```
 
 Now you should be able to use the CLI and access web actions. For example, if you follow the instructions to deploy a hello world function below, you should be able to follow the web url and trigger a FaaS. Note that in the case of the docker container, Whisk complains that it is unable to validate a certificate. You can bypass this by adding the `-i` flag to any `wsk` command that you run, which stands for insecure. In my case, I just added this to the `alias` command above. This might be a bug (feature?) of the docker container deployment. When Serverless (the API, not the generic name) interfaces with Whisk, it requires that you set a flag in the YAML file to `ignore_certs`. So there is precedence from Serverless that, for whatever reason, when deploying FaaS locally through the docker container you have to ignore the certification that is normally required by Whisk.
+
+The default IP address that I get for the docker container is `https://160.91.45.8` but this may not be static like the Vagrant machine IP address is static. You can always check by deploying a hello world function and then grabbing the url via `wsk action get helloWorld --url`. 
 
 ## Deploy some FaaS
 
