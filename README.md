@@ -3,6 +3,16 @@
 This README serves as documentation for getting OpenWhisk to run on a virtual machine (VM). OpenWhisk is an open source project that provides a framework for deploying so-called "serverless" functions, also known as functions as a service (FaaS). Hopefully this README will allow the user to quickly get OpenWhisk up and running on a VM and then using and deploying some example hello world functions.
 
 
+#### Table of Contents
+
+- [Building and Running OpenWhisk on Vagrant VM](## Building and Running OpenWhisk on Vagrant VM)
+	- [Setting up OpenWhisk Environment on Vagrant VM](### Setting up OpenWhisk Environment on Vagrant VM)
+- [Building and Running OpenWhisk through Docker](## Building and Running OpenWhisk through Docker)
+- [Deploy some Faas](## Deploy some FaaS)
+	- [Building a FaaS action](#### Building a FaaS action)
+	- [Building Chained FaaS actions](#### Building Chained FaaS actions)
+	- [Useful FaaS links](#### Useful FaaS links)
+
 ## Building and Running OpenWhisk on Vagrant VM
 
 The first step to deploying serverless functions through OpenWhisk is to get the framework constructed on a Vagrant VM. Therefore, the first step that is required is to get Vagrant.
@@ -122,22 +132,13 @@ Next, to get the CLI API functional you need to access the binary file that was 
 alias wsk=~/git/openwhisk-devtools/docker-compose/openwhisk-src/bin/wsk
 ```
 
-Now you should be able to use the CLI and access web actions. For example, if you follow the instructions to deploy a hello world function below, you should be able to follow the web url and trigger a FaaS. Note that in the case of the docker container, Whisk complains that it is unable to validate a certificate. You can bypass this by adding the `-i` flag to any `wsk` command that you run, which stands for insecure. This might be a bug (feature?) of the docker container deployment. When Serverless (the API, not the generic name) interfaces with Whisk, it requires that you set a flag in the YAML file to `ignore_certs`. So there is precedence from Serverless that, for whatever reason, when deploying FaaS locally through the docker container you have to ignore the certification that is normally required by Whisk.
+Now you should be able to use the CLI and access web actions. For example, if you follow the instructions to deploy a hello world function below, you should be able to follow the web url and trigger a FaaS. Note that in the case of the docker container, Whisk complains that it is unable to validate a certificate. You can bypass this by adding the `-i` flag to any `wsk` command that you run, which stands for insecure. In my case, I just added this to the `alias` command above. This might be a bug (feature?) of the docker container deployment. When Serverless (the API, not the generic name) interfaces with Whisk, it requires that you set a flag in the YAML file to `ignore_certs`. So there is precedence from Serverless that, for whatever reason, when deploying FaaS locally through the docker container you have to ignore the certification that is normally required by Whisk.
 
 ## Deploy some FaaS
 
 Now you should be in good shape to actually try to deploy some FaaS. Here are several links that I found useful for learning how to use Whisk and how to write some basic functions.
 
-#### Useful FaaS links
--[OpenWhisk Default README](https://github.com/apache/openwhisk/blob/master/README.md)
--[blog post about how to deploy hello world javascript function and then call it via browser URL](https://horeaporutiu.com/blog/openwhisk-web-actions-and-rest-api-calls/)
--[API Gateway README](https://github.com/apache/openwhisk/blob/master/docs/apigateway.md)
--[packages README](https://github.com/apache/openwhisk/blob/master/docs/packages.md)
--[Web actions README](https://github.com/apache/openwhisk/blob/master/docs/webactions.md#web-actions)
--[Using REST APIs with OpenWhisk README](https://github.com/apache/openwhisk/blob/master/docs/rest_api.md)
--[OpenWhisk Workshop exercises and READMEs](https://github.com/apache/openwhisk-workshop/tree/master/exercises)
--[Example FaaS included by default in OpenWhisk Catalog](https://github.com/apache/openwhisk-catalog/tree/master/packages/utils)
--[OpenWhisk actions README](https://github.com/apache/openwhisk/blob/master/docs/actions.md)
+
 
 
 #### Building a FaaS action
@@ -214,18 +215,16 @@ This parses the phrase "Joe likes to eat clementines" by the space character and
 
 
 
-
-
-
-
-
-
-
-
-
-
-
-
+#### Useful FaaS links
+-[OpenWhisk Default README](https://github.com/apache/openwhisk/blob/master/README.md)
+-[blog post about how to deploy hello world javascript function and then call it via browser URL](https://horeaporutiu.com/blog/openwhisk-web-actions-and-rest-api-calls/)
+-[API Gateway README](https://github.com/apache/openwhisk/blob/master/docs/apigateway.md)
+-[packages README](https://github.com/apache/openwhisk/blob/master/docs/packages.md)
+-[Web actions README](https://github.com/apache/openwhisk/blob/master/docs/webactions.md#web-actions)
+-[Using REST APIs with OpenWhisk README](https://github.com/apache/openwhisk/blob/master/docs/rest_api.md)
+-[OpenWhisk Workshop exercises and READMEs](https://github.com/apache/openwhisk-workshop/tree/master/exercises)
+-[Example FaaS included by default in OpenWhisk Catalog](https://github.com/apache/openwhisk-catalog/tree/master/packages/utils)
+-[OpenWhisk actions README](https://github.com/apache/openwhisk/blob/master/docs/actions.md)
 
 
 
