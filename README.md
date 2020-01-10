@@ -3,7 +3,7 @@
 This README serves as documentation for getting OpenWhisk to run on a virtual machine (VM). OpenWhisk is an open source project that provides a framework for deploying so-called "serverless" functions, also known as functions as a service (FaaS). Hopefully this README will allow the user to quickly get OpenWhisk up and running on a VM and then using and deploying some example hello world functions.
 
 
-### Building OpenWhisk VM
+## Building and Running OpenWhisk on Vagrant VM
 
 The first step to deploying serverless functions through OpenWhisk is to get the framework constructed on a Vagrant VM. Therefore, the first step that is required is to get Vagrant.
 
@@ -36,7 +36,7 @@ source /etc/environment
 Add the following lines under `source /etc/environment`:
 ```bash
 sudo apt-get install -y npm
-curl -sL https://deb.nodesource.com/setup_13.x | sudo -E bash -
+curl -sL https://deb.nodesource.com/setup_13.x | sudo -E bash - 
 sudo apt-get install -y nodejs
 ```
 
@@ -70,7 +70,7 @@ vagrant@ubuntu-xenial:$ wsk action invoke /whisk.system/utils/echo -p message he
 ```
 which should return
 
-```bash
+```
 {
     "message": "hello"
 }
@@ -78,41 +78,71 @@ which should return
 
 So that OpenWhisk knows where to deploy your serverless functions, create a file in your home directory:
 
-```bash
+```
 vagrant@ubuntu-xenial:$ emacs ~/.wskprops
 ```
 
 If the file is not already filled with the following information, copy the following into `~/.wskprops` :
-
 ```
 AUTH=23bc46b1-71f6-4ed5-8c54-816aa4f8c502:123zO3xZCLrMN6v2BKK1dXYFpXlPkccOFqm12CdAsMgRU4VrNZ9lyGVCGuMDGIwP
 APIHOST=192.168.33.16
 ```
 
-These are the default authorization and IP address that OpenWhisk will deploy functions with/to. Note that you should now be able to actually go to `http://192.168.33.16` and see the OpenWhisk default JSON data. If the website asks you to enter a user name and password, these are givne in the `AUTH` variable above. The username is everything before the `:`, and the password is everything after the `:`.
+These are the default authorization and IP address that OpenWhisk will deploy functions with/to. Note that you should now be able to actually go to `http://192.168.33.16` and see the OpenWhisk default JSON data.
 
 
 
-### Deploy some FaaS
+## Building and Running OpenWhisk through Docker
+
+The OpenWhisk dev team recently deleted all of the Vagrant capabilties, since apparently the community does not use the Vagrant option. They suggest running through a Docker container, which basically does the same thing as the Vagrant machine except that now your functions will be deployed through a container instead of through the Vagrant VM.
+
+A useful [link](http://jamesthom.as/blog/2018/01/19/starting-openwhisk-in-sixty-seconds/) explains how to get started in 60 seconds. I basically followed these instructions, with some additional tweaks. The full setup list of instructions is documented below. The following instructions are assuming you already have docker desktop [installed](https://docs.docker.com/install/) for your OS.
+
+Clone the repository and run the Makefile quick-start option:
+
+```bash
+git clone https://github.com/apache/openwhisk-devtools.git
+cd openwhisk-devtools/docker-compose
+sudo make quick-start
+```
+
+This builds the docker containers and builds the OpenWhisk source for you to be able to use. After this is finished running, you should see an example print to the console screen of Hello World, which is how you know it has completed correctly.
+
+Now you need to get the CLI API functional. The `make quick-start` creates a `.wskprops` file for you, I would just copy this to your home directory since this is where OpenWhisk looks for it by default:
+
+```
+cp .wskprops ~/.wskprops
+WSK_CONFIG_FILE=~/.wskprops
+```
+
+Next, to get the CLI API functional you need to access the binary file that was installed by the Makefile. It is placed by default in `openwhisk-devtools/docker-compose/openwhisk-src/bin/wsk`. So I do:
+
+
+```bash
+alias wsk=~/git/openwhisk-devtools/docker-compose/openwhisk-src/bin/wsk
+```
+
+Now you should be able to use the CLI and access web actions. For example, if you follow the instructions to deploy a hello world function below, you should be able to follow the web url and trigger a FaaS. Note that in the case of the docker container, Whisk complains that it is unable to validate a certificate. You can bypass this by adding the `-i` flag to any `wsk` command that you run, which stands for insecure. This might be a bug (feature?) of the docker container deployment. When Serverless (the API, not the generic name) interfaces with Whisk, it requires that you set a flag in the YAML file to `ignore_certs`. So there is precedence from Serverless that, for whatever reason, when deploying FaaS locally through the docker container you have to ignore the certification that is normally required by Whisk.
+
+## Deploy some FaaS
 
 Now you should be in good shape to actually try to deploy some FaaS. Here are several links that I found useful for learning how to use Whisk and how to write some basic functions.
 
 #### Useful FaaS links
-- [OpenWhisk Default README](https://github.com/apache/openwhisk/blob/master/README.md)
-- [blog post about how to deploy hello world javascript function and then call it via browser URL](https://horeaporutiu.com/blog/openwhisk-web-actions-and-rest-api-calls/)
-- [API Gateway README](https://github.com/apache/openwhisk/blob/master/docs/apigateway.md)
-- [packages README](https://github.com/apache/openwhisk/blob/master/docs/packages.md)
-- [Web actions README](https://github.com/apache/openwhisk/blob/master/docs/webactions.md#web-actions)
-- [Using REST APIs with OpenWhisk README](https://github.com/apache/openwhisk/blob/master/docs/rest_api.md)
-- [OpenWhisk Workshop exercises and READMEs](https://github.com/apache/openwhisk-workshop/tree/master/exercises)
-- [Example FaaS included by default in OpenWhisk Catalog](https://github.com/apache/openwhisk-catalog/tree/master/packages/utils)
-- [OpenWhisk actions README](https://github.com/apache/openwhisk/blob/master/docs/actions.md)
+-[OpenWhisk Default README](https://github.com/apache/openwhisk/blob/master/README.md)
+-[blog post about how to deploy hello world javascript function and then call it via browser URL](https://horeaporutiu.com/blog/openwhisk-web-actions-and-rest-api-calls/)
+-[API Gateway README](https://github.com/apache/openwhisk/blob/master/docs/apigateway.md)
+-[packages README](https://github.com/apache/openwhisk/blob/master/docs/packages.md)
+-[Web actions README](https://github.com/apache/openwhisk/blob/master/docs/webactions.md#web-actions)
+-[Using REST APIs with OpenWhisk README](https://github.com/apache/openwhisk/blob/master/docs/rest_api.md)
+-[OpenWhisk Workshop exercises and READMEs](https://github.com/apache/openwhisk-workshop/tree/master/exercises)
+-[Example FaaS included by default in OpenWhisk Catalog](https://github.com/apache/openwhisk-catalog/tree/master/packages/utils)
+-[OpenWhisk actions README](https://github.com/apache/openwhisk/blob/master/docs/actions.md)
 
 
 #### Building a FaaS action
 
 You can deploy your FaaS by using some of the hello world examples in this repository. One easy example is to trigger a function with a URL that makes a decision and triggers some other functions based on a string parameter given in the URL. Clone this repository first:
-
 ```bash
 vagrant@ubuntu-xenial:$ git clone https://github.com/osbornjd/HelloWorldOpenWhisk.git
 ```
@@ -148,7 +178,6 @@ vagrant@ubuntu-xenial:$ wsk action get pythondemo/redirectAction --url
 ```
 
 then type in the URL at the browser
-
 ```
 https://192.168.33.16/api/v1/web/guest/default/webRedirectAction?name=Joe
 ```
@@ -176,8 +205,48 @@ vagrant@ubuntu-xenial:$ wsk action create htmlSequence/htmlSequence --sequence h
 vagrant@ubuntu-xenial:$ wsk action get htmlSequence/htmlSequence --url
 ```
 Then type the URL into your browser with a string to parse and a character with which to parse the string, for example:
-
 ```
 https://192.168.33.16/api/v1/web/guest/htmlSequence/htmlSequence?name=Joe%20likes%20to%20eat%20clementines&separator=%20
 ```
 This parses the phrase "Joe likes to eat clementines" by the space character and prints it to to an html page (I didn't know this, but apparently %20 is the space character in URL language).
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
