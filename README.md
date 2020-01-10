@@ -219,15 +219,15 @@ This parses the phrase "Joe likes to eat clementines" by the space character and
 
 
 #### Useful FaaS links
--[OpenWhisk Default README](https://github.com/apache/openwhisk/blob/master/README.md)
--[blog post about how to deploy hello world javascript function and then call it via browser URL](https://horeaporutiu.com/blog/openwhisk-web-actions-and-rest-api-calls/)
--[API Gateway README](https://github.com/apache/openwhisk/blob/master/docs/apigateway.md)
--[packages README](https://github.com/apache/openwhisk/blob/master/docs/packages.md)
--[Web actions README](https://github.com/apache/openwhisk/blob/master/docs/webactions.md#web-actions)
--[Using REST APIs with OpenWhisk README](https://github.com/apache/openwhisk/blob/master/docs/rest_api.md)
--[OpenWhisk Workshop exercises and READMEs](https://github.com/apache/openwhisk-workshop/tree/master/exercises)
--[Example FaaS included by default in OpenWhisk Catalog](https://github.com/apache/openwhisk-catalog/tree/master/packages/utils)
--[OpenWhisk actions README](https://github.com/apache/openwhisk/blob/master/docs/actions.md)
+- [OpenWhisk Default README](https://github.com/apache/openwhisk/blob/master/README.md)
+- [blog post about how to deploy hello world javascript function and then call it via browser URL](https://horeaporutiu.com/blog/openwhisk-web-actions-and-rest-api-calls/)
+- [API Gateway README](https://github.com/apache/openwhisk/blob/master/docs/apigateway.md)
+- [packages README](https://github.com/apache/openwhisk/blob/master/docs/packages.md)
+- [Web actions README](https://github.com/apache/openwhisk/blob/master/docs/webactions.md#web-actions)
+- [Using REST APIs with OpenWhisk README](https://github.com/apache/openwhisk/blob/master/docs/rest_api.md)
+- [OpenWhisk Workshop exercises and READMEs](https://github.com/apache/openwhisk-workshop/tree/master/exercises)
+- [Example FaaS included by default in OpenWhisk Catalog](https://github.com/apache/openwhisk-catalog/tree/master/packages/utils)
+- [OpenWhisk actions README](https://github.com/apache/openwhisk/blob/master/docs/actions.md)
 
 
 
